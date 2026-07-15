@@ -68,7 +68,7 @@
 // /= chap operandni o'ng operandga bo'lib, natijani chap operandga tayinlaydi || a /= b
 // %= chap operandni o'ng operandga bo'lib, natijaning qolg'ini chap operandga tayinlaydi || a %= b
 
-let a = 6, b = 4, c = 3;
+// let a = 6, b = 4, c = 3;
 
 // console. log(a); // 6
 // a += b;
