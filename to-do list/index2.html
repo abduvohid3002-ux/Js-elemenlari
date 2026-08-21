@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list</title>
+</head>
+<body>
+    <!-- Asosiy container -->
+    <div class="container">
+        <!-- Asosiy content -->
+        <div class="main-content">
+            <!-- Yuqori (asosiy) bo'lim -->
+            <div class="top-section">
+                <!-- input va button uchun div  -->
+                <div class="main-input__div">
+                    <!-- Ma'lumot kiritish uchun input -->
+                    <input type="text" name="to-do" id="main-input">
+                    <!-- /Ma'lumot kiritish uchun input -->
+                    <button id="myBtn">
+                        Kiritish
+                    </button>
+                </div>
+                <!-- input va button uchun div -->
+                <label for="main-input">Qiladigan ishingizni kiriting</label>
+                <!-- Shunchaki label -->
+            </div>
+            <!-- /Yuqori bo'lim -->
+            <!-- Quyi bo'lim && kiritilgan ma'lumotlarni saqlash uchun div -->
+            <div class="main-data">
+
+            </div>
+            <!-- O'chib ketuvchi habar -->
+            <p class="message">
+                Sizda hech qanday qiladigan ish yo'q.
+            </p>
+        </div>
+        <!-- /Asosiy content -->
+    </div>
+    <!-- /Asosiy container -->
+
+    <script>
+        const myInput = document.querySelector("#main-input") // inputni myInput o'zgaruvchisiga yuklash
+        const myBtn = document.querySelector("#myBtn") // Tugmani myBtn ga yuklash
+        const mainData = document.querySelector('.main-data') // Ma'lumotlarni saqlash uchun ochilgan divni mainDataga yuklash
+        const delMessage = document.querySelector('.message') // O'chib ketuvchi habarni delMessage ga yuklash
+
+        myBtn.addEventListener("click", () =>{ // myBtn bosilganda funksiyani ishga tushurish
+            const listItem = myInput.value.trim(); // inputdan kelgan qiymatni listItem o'zgaruvchisiga yuklash
+
+            if(listItem === ""){} // Agar inputdan habar kelmagan bo'lsa hech nima bajarmaslik
+            else{
+                
+                const uniqueId = "check-" + Date.now() // O'zgarmas id yaratish uchun uniqueId o'zgaruvchisi ochildi va Date kalit so'zi va .now kalit so'zlari yordamida ayni vaqtdagi sana va vaqtni check- matniga qo'shib unique o'zgaruvchisiga yukladik
+
+                const myCheckbox = document.createElement('input') // input elementini yaratib unga myCheckbox deb nom berdik
+                myCheckbox.type = "checkbox"; // input turini checkboxga o'zgartirdik
+                myCheckbox.id = uniqueId; // uning id sini uniqueId ga tegladik
+                
+                const myLabel = document.createElement('label') // biz label o'zgaruvchisi yaratdik va uni myLabelga yukladik
+                myLabel.textContent = listItem; // uning textini listItem ya'ni inputdan kelgan qiymatga tengladik
+                myLabel.htmlFor = uniqueId; // for qiymatini esa uniqueId ga tengladik
+
+                myCheckbox.addEventListener("change", (event) => { // event listener yordamida checkboxni kuzatdik
+                    if (event.target.checked) { // agar u checkedga o'zgarsa
+                        myLabel.style.textDecoration = "line-through"; // labelning stilini line-through ga o'zgartirdik
+                    } else {
+                        myLabel.style.textDecoration = "none"; // agar o'z holatiga qaytsa nonega qaytardik
+                    }
+                });
+
+                const delBtn = document.createElement('button'); // button yaratdik va delBtn ga yukladik
+                delBtn.textContent = "X"; // qiymatini X ga yukladik
+
+                
+                
+                const toDoItem = document.createElement('div');
+                toDoItem.classList = "item"
+                toDoItem.appendChild(myCheckbox)
+                toDoItem.appendChild(myLabel)
+                toDoItem.appendChild(delBtn)
+
+                delBtn.addEventListener("click", (event) => {
+                    const parentDiv = event.target.closest(".item");
+                    parentDiv.remove();
+
+                    if (mainData.children.length === 0) {
+                        delMessage.style.display = "block";
+                    }
+                });
+
+                mainData.appendChild(toDoItem);
+
+                delMessage.style.display = 'none';
+                
+                myInput.value = "";
+            }
+        })
+
+        const items = document.querySelectorAll('.item');
+
+        items.forEach((item) => {
+            delBtn.addEventListener("click", () => {
+                toDoItem.target.style.display = "none";
+            })
+        })
+    </script>
+</body>
+</html>
